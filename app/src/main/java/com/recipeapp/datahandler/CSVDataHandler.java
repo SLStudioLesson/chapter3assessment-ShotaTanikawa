@@ -55,7 +55,7 @@ public class CSVDataHandler implements DataHandler {
 
     @Override
     public void writeData(Recipe recipe) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
             //レシピ名を文字列にする
             String recipeLine = recipe.getName();
 
