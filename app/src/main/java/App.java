@@ -18,14 +18,10 @@ public class App {
             //1の時のCSV modeの時の出力
             if(choice.equals("1")) {
                 CSVDataHandler csvDataHandler = new CSVDataHandler();
+                RecipeUI ui = new RecipeUI(csvDataHandler);
                 System.out.println("Current mode: CSV");
-                System.out.println("Main Menu: ");
-                System.out.println("1: Display Recipes");
-                System.out.println("2: Add New Recipe");
-                System.out.println("3: Search Recipe");
-                System.out.println("4: Exit Application");
-                System.out.println("Please choose an option:");
-                String choise = reader.readLine();
+                ui.displayMenu();
+                
 
                 //2の時の出力
             } else if(choice.equals("2")) {

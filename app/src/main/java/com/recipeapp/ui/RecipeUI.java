@@ -37,8 +37,10 @@ public class RecipeUI {
 
                 switch (choice) {
                     case "1":
+                    displayRecipes();
                         break;
                     case "2":
+                    addNewRecipe();
                         break;
                     case "3":
                         break;
@@ -66,13 +68,63 @@ public class RecipeUI {
                 return;
             }
 
-            System.out.println();
+            //レシピ名の出力
             System.out.println("Recipes:");
-            System.out.println("-----------------------------------");
+            for (Recipe recipe : recipes) {
+                System.out.println("-----------------------------------");
+                System.out.println("Recipe Name: " + recipe.getName());
+                System.out.print("Main Ingredients: ");
+                
+                //材料をカンマで区切って出力
+                ArrayList<Ingredient> ingredients = recipe.getIngredients();
+                for (int i = 0; i < ingredients.size(); i++) {
+                    System.out.print(ingredients.get(i).getName());
+                    //最後以外にカンマつける
+                    if (i < ingredients.size() - 1) {
+                        System.out.print(", ");
+                    }
+                }
+                System.out.println();
+            }
+
             
+
+
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
     }
+    }
+
+    //addNewRecipeの実装
+    private void addNewRecipe() {
+        try {
+            System.out.println("Adding a new recipe.");
+            System.out.print("Enter recipe name: ");
+            String recipeName = reader.readLine();
+
+            System.out.println("Enter ingredients (type 'done' when finished):");
+            ArrayList<Ingredient> ingredients = new ArrayList<>();
+
+            //宣言したArrayListに格納していく
+            while (true) {
+                System.out.print("Ingredients: ");
+                String input = reader.readLine();
+                if (input.equals("done")) {
+                    break;//doneの時に終了する
+                }
+                ingredients.add(new Ingredient(input));
+            }
+
+            //ファイルに入力したデータを書き込む
+            //recipeオブジェクトを作成
+            Recipe recipe = new Recipe(recipeName, ingredients);
+            dataHandler.writeData(recipe);
+
+            System.out.println("Recipe add successfully");
+
+        } catch (IOException e) {
+            System.out.println("Failed to add new recipe: " + e.getMessage());
+        }
     }
 }
 

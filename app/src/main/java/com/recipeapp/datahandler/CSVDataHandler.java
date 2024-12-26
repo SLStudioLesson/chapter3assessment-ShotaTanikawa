@@ -1,10 +1,11 @@
 package com.recipeapp.datahandler;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.recipeapp.model.Ingredient;
 import com.recipeapp.model.Recipe;
@@ -54,7 +55,19 @@ public class CSVDataHandler implements DataHandler {
 
     @Override
     public void writeData(Recipe recipe) throws IOException {
-        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            //レシピ名を文字列にする
+            String recipeLine = recipe.getName();
+
+            //材料をカンマ区切りで追加
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                recipeLine += "," + ingredient.getName();
+            }
+
+            //ファイルに書き込む
+            writer.write(recipeLine);
+            writer.newLine();
+        }
     }
 
     @Override
